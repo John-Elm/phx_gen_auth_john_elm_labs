@@ -5,7 +5,7 @@ defmodule PhxJohnElmLabs.MixProject do
     [
       app: :phx_john_elm_labs,
       version: "0.1.0",
-      elixir: "~> 1.17",
+      elixir: "~> 1.14",
       package: package(),
       start_permanent: Mix.env() == :prod,
       description: "A wrapper for mix phx.new with better defaults. Use UUIDs by default, opinionated project formatting, and automated test running",
