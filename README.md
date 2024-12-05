@@ -8,6 +8,10 @@ For a more detailed overview, please visit [the blog post](https://johnelmlabs.c
 
 ## Installation
 
+It's available on Hex.pm.
+
+Simply run `mix archive.install hex phx_new_john_elm_labs` to install it.
+
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `phx_john_elm_labs` to your list of dependencies in `mix.exs`:
 
@@ -19,7 +23,4 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/phx_john_elm_labs>.
-
+The docs can be found at <https://hexdocs.pm/phx_john_elm_labs>.
