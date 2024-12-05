@@ -12,6 +12,9 @@ defmodule Mix.Tasks.Phx.New.JohnElmLabs do
 
   This task wraps the default `mix phx.new` and adds custom dependencies,
   configurations, and files tailored to John Elm Labs.
+
+  See README.md for more details:
+https://github.com/John-Elm/phx_gen_auth_john_elm_labs
   """
 
   def run(args) do
