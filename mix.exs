@@ -15,6 +15,7 @@ defmodule PhxJohnElmLabs.MixProject do
 
   defp package do
     [
+      name: :phx_new_john_elm_labs,
       maintainers: ["John Elm", "John Curran"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/John-Elm/phx_gen_auth_john_elm_labs"}
