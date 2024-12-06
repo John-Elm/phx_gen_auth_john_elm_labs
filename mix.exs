@@ -4,7 +4,7 @@ defmodule PhxJohnElmLabs.MixProject do
   def project do
     [
       app: :phx_john_elm_labs,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.12",
       package: package(),
       start_permanent: Mix.env() == :prod,
