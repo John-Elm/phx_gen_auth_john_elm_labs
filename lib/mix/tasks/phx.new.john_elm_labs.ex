@@ -14,7 +14,7 @@ defmodule Mix.Tasks.Phx.New.JohnElmLabs do
   configurations, and files tailored to John Elm Labs.
 
   See README.md for more details:
-https://github.com/John-Elm/phx_gen_auth_john_elm_labs
+  https://github.com/John-Elm/phx_gen_auth_john_elm_labs
   """
 
   def run(args) do
@@ -60,45 +60,50 @@ https://github.com/John-Elm/phx_gen_auth_john_elm_labs
     {:ok, ast} = Code.string_to_quoted(mix_exs_content)
 
     # Transform the AST to include new dependencies and preferred_cli_env
-    new_ast = Macro.postwalk(ast, fn
-      {:defp, meta, [{:deps, _, _} = fun_head, [do: deps_body]]} ->
-        # Ensure deps_body is a list
-        existing_deps = case deps_body do
-          {:__block__, _, deps} -> deps
-          deps when is_list(deps) -> deps
-          dep -> [dep]
-        end
+    new_ast =
+      Macro.postwalk(ast, fn
+        {:defp, meta, [{:deps, _, _} = fun_head, [do: deps_body]]} ->
+          # Ensure deps_body is a list
+          existing_deps =
+            case deps_body do
+              {:__block__, _, deps} -> deps
+              deps when is_list(deps) -> deps
+              dep -> [dep]
+            end
 
-        # Build AST nodes for new dependencies using quote
-        new_deps_ast = [
-          quote do
-            {:styler, "~> 1.2", only: [:dev, :test], runtime: false}
-          end,
-          quote do
-            {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
-          end,
-          quote do
-            {:mix_test_watch, "~> 1.0", only: [:test], runtime: false}
-          end
-        ]
+          # Build AST nodes for new dependencies using quote
+          new_deps_ast = [
+            quote do
+              {:styler, "~> 1.2", only: [:dev, :test], runtime: false}
+            end,
+            quote do
+              {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+            end,
+            quote do
+              {:mix_test_watch, "~> 1.0", only: [:test], runtime: false}
+            end
+          ]
 
-        # Append new dependencies to existing ones
-        updated_deps = existing_deps ++ new_deps_ast
+          # Append new dependencies to existing ones
+          updated_deps = existing_deps ++ new_deps_ast
 
-        # Return the updated defp deps function
-        {:defp, meta, [fun_head, [do: updated_deps]]}
+          # Return the updated defp deps function
+          {:defp, meta, [fun_head, [do: updated_deps]]}
 
-      {:def, meta, [{:project, _, _} = fun_head, [do: project_body]]} ->
-        # Handle project function similarly
-        existing_project_config = project_body
-        preferred_cli_env = Keyword.get(existing_project_config, :preferred_cli_env, [])
-        new_preferred_cli_env = Keyword.put(preferred_cli_env, :"test.watch", :test)
-        new_project_config = Keyword.put(existing_project_config, :preferred_cli_env, new_preferred_cli_env)
-        {:def, meta, [fun_head, [do: new_project_config]]}
+        {:def, meta, [{:project, _, _} = fun_head, [do: project_body]]} ->
+          # Handle project function similarly
+          existing_project_config = project_body
+          preferred_cli_env = Keyword.get(existing_project_config, :preferred_cli_env, [])
+          new_preferred_cli_env = Keyword.put(preferred_cli_env, :"test.watch", :test)
 
-      other ->
-        other
-    end)
+          new_project_config =
+            Keyword.put(existing_project_config, :preferred_cli_env, new_preferred_cli_env)
+
+          {:def, meta, [fun_head, [do: new_project_config]]}
+
+        other ->
+          other
+      end)
 
     # Convert the AST back to Elixir code
     updated_mix_exs = Macro.to_string(new_ast)
@@ -211,7 +216,10 @@ https://github.com/John-Elm/phx_gen_auth_john_elm_labs
     """
 
     # Insert the new repo configs before the import_config line
-    updated_config_content = Regex.replace(import_config_pattern, updated_config_content, new_repo_configs <> "\\0", global: false)
+    updated_config_content =
+      Regex.replace(import_config_pattern, updated_config_content, new_repo_configs <> "\\0",
+        global: false
+      )
 
     # Write back the updated config file
     File.write!(config_file, updated_config_content)

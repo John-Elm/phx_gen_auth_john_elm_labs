@@ -8,7 +8,8 @@ defmodule PhxJohnElmLabs.MixProject do
       elixir: "~> 1.12",
       package: package(),
       start_permanent: Mix.env() == :prod,
-      description: "A wrapper for mix phx.new with better defaults. Use UUIDs by default, opinionated project formatting, and automated test running",
+      description:
+        "A wrapper for mix phx.new with better defaults. Use UUIDs by default, opinionated project formatting, and automated test running",
       deps: deps()
     ]
   end
